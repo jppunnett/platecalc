@@ -15,7 +15,7 @@ plates_equal(float actual[], float expected[])
 
 int main()
 {
-	const float barbell_weight = 45.5;
+	const float barbell_weight = 45;
 	// Decision: list of plates pre-sorted from highest to lowest and ends with
 	// zero sentinel. 
 	const float plates_avail[] = {45, 35, 25, 15, 10, 5, 2.5, 1.5, 0};
