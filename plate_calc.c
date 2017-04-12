@@ -15,6 +15,9 @@ calc_plates(float target_weight, float bar_weight, const float plates_avail[])
 	if(target_weight <= 0) return NULL;
 	if(bar_weight <= 0) return NULL;
 
+	// Assumptions: plates_avail pre-sorted from highest to lowest and ends with
+	// zero sentinel.
+
 	// Ten seems a reasonable estimate of the number of plates you can stack on
 	// one side of a bar.
 	static const int MAX_PLATES = 10;
