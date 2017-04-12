@@ -1,7 +1,22 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "plate_calc.h"
+
+#define MAX_PLATES_AVAIL 20
+#define MAX_PLATES_EXPTD 10
+
+struct test_case {
+	float bar_weight;
+	float target_weight;
+	float plates_avail[MAX_PLATES_AVAIL];
+	float expected[MAX_PLATES_EXPTD];
+} test_cases[] = {
+	{45, 100, {45, 35, 25, 15, 10, 5, 2.5, 1.5, 0}, {25, 2.5, 0}},
+	{45, 110, {45, 35, 25, 15, 10, 5, 2.5, 1.5, 0}, {25, 5, 2.5, 0}}
+};
+
 
 static int
 plates_equal(float actual[], float expected[])
@@ -15,19 +30,22 @@ plates_equal(float actual[], float expected[])
 
 int main()
 {
-	const float bar_weight = 45;
-	// Decision: list of plates pre-sorted from highest to lowest and ends with
-	// zero sentinel. 
-	const float plates_avail[] = {45, 35, 25, 15, 10, 5, 2.5, 1.5, 0};
+	const int ncases = sizeof(test_cases) / sizeof(struct test_case);
+	printf("Number of test cases: %d\n", ncases);
 
-	// Calculate plates for 100 lb load
-	float *actual = calc_plates(100, bar_weight, plates_avail);
-	assert(actual);
+	for(int i = 0; i < ncases; ++i) {
+		float *actual =
+			calc_plates(
+				test_cases[i].target_weight,
+				test_cases[i].bar_weight,
+				test_cases[i].plates_avail);
 
-	float expected[] = {25, 2.5, 0};
-	assert(plates_equal(actual, expected));
+		assert(actual);
+		assert(plates_equal(actual, test_cases[i].expected));
+		free(actual);
+	}
 
-	free(actual);
+	printf("PASSED\n");
 
 	return 0;
 }
