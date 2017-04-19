@@ -26,6 +26,8 @@ struct test_case {
 static int
 plates_equal(float actual[], float expected[])
 {
+	assert(actual);
+	assert(expected);
 	for(int i = 0; actual[i] != 0 && expected[i] != 0; i++) {
 		if(actual[i] != expected[i])
 			return 0;
@@ -45,12 +47,9 @@ int main()
 				test_cases[i].bar_weight,
 				test_cases[i].plates_avail);
 
-		assert(actual);
 		assert(plates_equal(actual, test_cases[i].expected));
-		free(actual);
 	}
 
 	printf("PASSED\n");
-
 	return 0;
 }
