@@ -7,7 +7,12 @@
 
 static float get_plate_weight(const float weight, const float plates_avail[]);
 
-
+// calc_plates returns the plates you need to stack on each side of a bar to
+// lift target_weight. calc_weight returns NULL if,
+//   plates_avail is NULL
+//   target_weight is less than or equal to 0
+//   bar_weigt is less than or equal to 0
+//	 not enough memory can be allocated to hold the list of plates
 float*
 calc_plates(float target_weight, float bar_weight, const float plates_avail[])
 {
@@ -15,8 +20,7 @@ calc_plates(float target_weight, float bar_weight, const float plates_avail[])
 	if(target_weight <= 0) return NULL;
 	if(bar_weight <= 0) return NULL;
 
-	// Assumptions: plates_avail pre-sorted from highest to lowest and ends with
-	// zero sentinel.
+	// Assumptions: plates_avail sorted from highest to lowest ending with zero
 
 	// Ten seems a reasonable estimate of the number of plates you can stack on
 	// one side of a bar.
@@ -41,6 +45,9 @@ calc_plates(float target_weight, float bar_weight, const float plates_avail[])
 	return plates;	
 }
 
+// get_plate_weight returns the heaviest plate in plates_avail that is closest
+// to weight. E.g. if weight is 60lbs and the heaviest plate available is a
+// 45lb plate, then get_plate_weight returns 45.
 static float
 get_plate_weight(float weight, const float plates_avail[])
 {
