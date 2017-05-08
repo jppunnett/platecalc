@@ -1,1 +1,4 @@
 pcalc_test
+*.a
+*.o
+
